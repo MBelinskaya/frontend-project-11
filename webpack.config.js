@@ -18,7 +18,6 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
-            title: 'RSS',
         }),
 
         // Add your plugins here
