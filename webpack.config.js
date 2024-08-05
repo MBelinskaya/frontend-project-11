@@ -14,14 +14,13 @@ const config = {
     devServer: {
         open: true,
         host: 'localhost',
+        // host: '0.0.0.0',
+        port: 4000,
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
         }),
-
-        // Add your plugins here
-        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
     ],
     module: {
         rules: [
