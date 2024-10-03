@@ -5,7 +5,7 @@
 
 Deployment [Domains](https://frontend-project-11-rho-weld.vercel.app/)
 
-# Difference Calculator
+# RSS Reader
 
 ### About
 RSS Reader is a service for aggregating RSS feeds, with the help of which it is convenient to read a variety of sources, such as blogs.
