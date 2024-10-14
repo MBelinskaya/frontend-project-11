@@ -19,7 +19,6 @@ It allows you to add an unlimited number of RSS feeds, updates them itself and a
 
 Deployment [Domains](https://frontend-project-11-rho-weld.vercel.app/)
 
-
 <div align="center">
   <img src="https://i.postimg.cc/L6LbYLCM/start-page.jpg" width="1100"/>
 </div>
