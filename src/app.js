@@ -5,6 +5,14 @@ import _ from 'lodash';
 import locale from './locales/locales.js';
 import wiew from './view.js';
 import ru from './locales/ru.js';
+import parser from './parser.js';
+
+const addProxy = (url) => {
+  const urlWithProxy = new URL('/get', 'https://allorigins.hexlet.app');
+  urlWithProxy.searchParams.set('url', url);
+  urlWithProxy.searchParams.set('disableCache', 'true');
+  return urlWithProxy.toString();
+};
 
 const app = () => {
   const timeout = 5000;
@@ -31,38 +39,6 @@ const app = () => {
       .validate(url)
       .then(() => { })
       .catch((error) => error.message);
-  };
-
-  const addProxy = (url) => {
-    const urlWithProxy = new URL('/get', 'https://allorigins.hexlet.app');
-    urlWithProxy.searchParams.set('url', url);
-    urlWithProxy.searchParams.set('disableCache', 'true');
-    return urlWithProxy.toString();
-  };
-
-  const parser = (data) => {
-    const newParser = new DOMParser();
-    const newData = newParser.parseFromString(data, 'application/xml');
-    const parsererror = newData.querySelector('parsererror');
-    if (parsererror) {
-      const error = new Error(parsererror.textContent);
-      error.isParserError = true;
-      throw error;
-    }
-    const feedTitle = newData.querySelector('channel title').textContent;
-    const feedDescription = newData.querySelector('channel description').textContent;
-    const feed = {
-      title: feedTitle,
-      description: feedDescription,
-    };
-    const items = newData.querySelectorAll('item');
-    const list = Array.from(items);
-    const posts = list.map((item) => ({
-      title: item.querySelector('title').textContent,
-      description: item.querySelector('description').textContent,
-      link: item.querySelector('link').textContent,
-    }));
-    return [feed, posts];
   };
 
   const updateRSS = (state) => {
