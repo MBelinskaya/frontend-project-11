@@ -110,9 +110,6 @@ const renderStatus = (value, elements, i18n, state) => {
 const wiew = (initialState, i18n, elements) => {
   const state = onChange(initialState, (path, value) => {
     switch (path) {
-      case 'error':
-        renderFeedback(value, elements, i18n);
-        break;
       case 'status':
         renderStatus(value, elements, i18n, state);
         break;
@@ -126,6 +123,9 @@ const wiew = (initialState, i18n, elements) => {
         renderModalWindow(state.shownPostId, state.posts, elements);
         break;
       case 'shownPostsIds':
+        break;
+      case 'error':
+        renderFeedback(value, elements, i18n);
         break;
       default:
         throw new Error('Unknown state ', path);

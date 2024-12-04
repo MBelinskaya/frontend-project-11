@@ -44,14 +44,14 @@ const app = () => {
   const updateRSS = (state) => {
     const requests = state.feeds.map((feed) => axios.get(addProxy(feed.link))
       .then((response) => {
-        const [, posts] = parser(response.data.contents);
+        const [, , posts] = parser(response.data.contents);
         const postsFromState = state.posts.filter((post) => post.feedId === feed.id);
         const newPosts = _.differenceBy(posts, postsFromState, 'link');
         state.posts = [...newPosts, ...state.posts];
       })
       .catch((err) => console.log(err)));
     Promise.all(requests)
-      .then(() => {
+      .finally(() => {
         setTimeout(updateRSS, timeout, state);
       });
   };
@@ -69,7 +69,8 @@ const app = () => {
   const loadRSS = (url, state) => {
     axios.get(addProxy(url))
       .then((responce) => {
-        const [feed, posts] = parser(responce.data.contents);
+        const [title, description, posts] = parser(responce.data.contents);
+        const feed = [title, description];
         feed.id = _.uniqueId();
         feed.link = url;
         state.feeds.push(feed);
@@ -95,7 +96,6 @@ const app = () => {
     .then(() => {
       yup.setLocale(locale);
       const initialState = {
-        status: 'filling',
         error: null,
         posts: [],
         feeds: [],
@@ -107,6 +107,7 @@ const app = () => {
         e.preventDefault();
         const url = new FormData(e.target).get('url').trim();
         const links = state.feeds.map(({ link }) => link);
+        state.status = 'loading';
         validate(url, links)
           .then((error) => {
             if (error) {
@@ -114,7 +115,6 @@ const app = () => {
               state.status = 'failed';
               return;
             }
-            state.error = null;
             loadRSS(url, state);
           });
       });
