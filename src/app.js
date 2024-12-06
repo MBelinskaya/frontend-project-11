@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import * as yup from 'yup';
 import i18next from 'i18next';
 import axios from 'axios';
@@ -41,8 +42,7 @@ const app = () => {
         const [, posts] = parser(response.data.contents);
         const postsFromState = state.posts.filter((post) => post.feedId === feed.id);
         const newPosts = _.differenceBy(posts, postsFromState, 'link');
-        // state.posts = [...newPosts, ...state.posts];
-        state.posts = [...newPosts];
+        state.posts = [...newPosts, ...state.posts];
       })
       .catch((err) => console.log(err)));
     Promise.all(requests)
@@ -72,8 +72,7 @@ const app = () => {
           post.id = _.uniqueId();
           post.feedId = feed.id;
         });
-        // state.posts = [...posts, ...state.posts];
-        state.posts = [...posts];
+        state.posts = [...posts, ...state.posts];
         state.status = 'loaded';
         state.error = null;
       })
