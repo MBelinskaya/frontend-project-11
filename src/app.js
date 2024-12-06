@@ -90,6 +90,7 @@ const app = () => {
     .then(() => {
       yup.setLocale(locale);
       const initialState = {
+        error: null,
         posts: [],
         feeds: [],
         shownPostId: null,
