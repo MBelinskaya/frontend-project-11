@@ -9,16 +9,16 @@ export default (data) => {
   }
   const feedTitle = newData.querySelector('channel title').textContent;
   const feedDescription = newData.querySelector('channel description').textContent;
-  const feed = {
+  const parsedData = {
     title: feedTitle,
     description: feedDescription,
   };
   const items = newData.querySelectorAll('item');
   const list = Array.from(items);
-  const posts = list.map((item) => ({
+  const parsedItems = list.map((item) => ({
     title: item.querySelector('title').textContent,
     description: item.querySelector('description').textContent,
     link: item.querySelector('link').textContent,
   }));
-  return [feed, posts];
+  return [parsedData, parsedItems];
 };

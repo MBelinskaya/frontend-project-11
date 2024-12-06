@@ -6,13 +6,7 @@ import locale from './locales/locales.js';
 import wiew from './view.js';
 import ru from './locales/ru.js';
 import parser from './parser.js';
-
-const addProxy = (url) => {
-  const urlWithProxy = new URL('/get', 'https://allorigins.hexlet.app');
-  urlWithProxy.searchParams.set('url', url);
-  urlWithProxy.searchParams.set('disableCache', 'true');
-  return urlWithProxy.toString();
-};
+import addProxy from './addproxy.js';
 
 const app = () => {
   const timeout = 5000;
@@ -47,7 +41,8 @@ const app = () => {
         const [, posts] = parser(response.data.contents);
         const postsFromState = state.posts.filter((post) => post.feedId === feed.id);
         const newPosts = _.differenceBy(posts, postsFromState, 'link');
-        state.posts = [...newPosts, ...state.posts];
+        // state.posts = [...newPosts, ...state.posts];
+        state.posts = [...newPosts];
       })
       .catch((err) => console.log(err)));
     Promise.all(requests)
@@ -77,7 +72,8 @@ const app = () => {
           post.id = _.uniqueId();
           post.feedId = feed.id;
         });
-        state.posts = [...posts, ...state.posts];
+        // state.posts = [...posts, ...state.posts];
+        state.posts = [...posts];
         state.status = 'loaded';
         state.error = null;
       })
