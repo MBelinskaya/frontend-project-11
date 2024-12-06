@@ -7,8 +7,12 @@ export default (data) => {
     error.isParserError = true;
     throw error;
   }
-  const title = newData.querySelector('channel title').textContent;
-  const description = newData.querySelector('channel description').textContent;
+  const feedTitle = newData.querySelector('channel title').textContent;
+  const feedDescription = newData.querySelector('channel description').textContent;
+  const feed = {
+    title: feedTitle,
+    description: feedDescription,
+  };
   const items = newData.querySelectorAll('item');
   const list = Array.from(items);
   const posts = list.map((item) => ({
@@ -16,6 +20,5 @@ export default (data) => {
     description: item.querySelector('description').textContent,
     link: item.querySelector('link').textContent,
   }));
-
-  return [title, description, posts];
+  return [feed, posts];
 };

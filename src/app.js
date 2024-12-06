@@ -44,7 +44,7 @@ const app = () => {
   const updateRSS = (state) => {
     const requests = state.feeds.map((feed) => axios.get(addProxy(feed.link))
       .then((response) => {
-        const [, , posts] = parser(response.data.contents);
+        const [, posts] = parser(response.data.contents);
         const postsFromState = state.posts.filter((post) => post.feedId === feed.id);
         const newPosts = _.differenceBy(posts, postsFromState, 'link');
         state.posts = [...newPosts, ...state.posts];
@@ -69,8 +69,7 @@ const app = () => {
   const loadRSS = (url, state) => {
     axios.get(addProxy(url))
       .then((responce) => {
-        const [title, description, posts] = parser(responce.data.contents);
-        const feed = [title, description];
+        const [feed, posts] = parser(responce.data.contents);
         feed.id = _.uniqueId();
         feed.link = url;
         state.feeds.push(feed);
